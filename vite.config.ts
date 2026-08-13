@@ -3,8 +3,8 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  // relative base so the build works at any URL (GitHub Pages subpath or custom domain)
-  base: "./",
+  // served from GitHub Pages project path; change to "/" for a custom domain
+  base: "/pulsiveg/",
   plugins: [react(), tailwindcss()],
   // dev-only: the local workspace path contains a colon, which breaks
   // Vite's fs allow-list matching; harmless for production builds

@@ -1,21 +1,10 @@
+import { Link } from "react-router-dom";
 import { TIERS, RATE_RULES, formatZAR } from "../data/pricing";
 
-export default function PricingSection({ onPick }: { onPick: (tierId: string) => void }) {
+export default function PricingSection() {
   return (
-    <section id="pricing" className="max-w-7xl mx-auto px-5 sm:px-8 py-24">
-      <p className="kicker">
-        <span className="gold-line" />
-        Investment
-      </p>
-      <h2 className="font-display text-4xl sm:text-5xl mt-5 max-w-3xl">
-        Locked rates. <span className="text-gold">No surprises at the drop-off.</span>
-      </h2>
-      <p className="text-mist max-w-xl mt-5">
-        Premium service, priced like it. Every booking starts from a locked
-        base — you know the number before the car moves.
-      </p>
-
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-14">
+    <>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {TIERS.map((t) => (
           <article
             key={t.id}
@@ -47,16 +36,16 @@ export default function PricingSection({ onPick }: { onPick: (tierId: string) =>
                 </li>
               ))}
             </ul>
-            <button
-              onClick={() => onPick(t.id)}
-              className={`mt-auto text-xs tracking-[0.25em] uppercase py-3.5 transition-colors cursor-pointer ${
+            <Link
+              to={`/book?service=${t.id}`}
+              className={`mt-auto text-center text-xs tracking-[0.25em] uppercase py-3.5 transition-colors ${
                 t.recommended
                   ? "bg-gold text-ink font-semibold hover:bg-gold-soft"
                   : "border border-gold/60 text-gold hover:bg-gold hover:text-ink"
               }`}
             >
               Book this →
-            </button>
+            </Link>
           </article>
         ))}
       </div>
@@ -76,6 +65,6 @@ export default function PricingSection({ onPick }: { onPick: (tierId: string) =>
           within inclusion. Final quote confirmed on WhatsApp before dispatch.
         </p>
       </div>
-    </section>
+    </>
   );
 }

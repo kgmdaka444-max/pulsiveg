@@ -77,14 +77,6 @@ export const TIERS: Tier[] = [
   },
 ];
 
-export const VEHICLES = [
-  { id: "vclass", name: "Mercedes V-Class", note: "The flagship. 6 VIP seats.", premium: 0 },
-  { id: "bmw7", name: "BMW 7 Series", note: "Executive sedan. Statement arrivals.", premium: 1500 },
-  { id: "bmw5", name: "BMW 5 Series", note: "Corporate workhorse. Sharp & discreet.", premium: 500 },
-  { id: "staria", name: "Hyundai Staria", note: "The signature shuttle. 7 seats.", premium: 0 },
-  { id: "h1", name: "Hyundai H1", note: "Group & luggage logistics. 8 seats.", premium: 0 },
-];
-
 export const RATE_RULES = [
   { rule: "Extra hour beyond inclusion", value: "R1,150 / hr" },
   { rule: "Extra distance beyond inclusion", value: "R14 / km" },
