@@ -3,12 +3,11 @@
 // to go live for the client.
 // ============================================================
 
-// ⚡ PLUG THE CLIENT'S WHATSAPP NUMBER HERE (country code, no +, no spaces)
-// e.g. South African mobile 082 123 4567  →  "27821234567"
-export const WHATSAPP_NUMBER = "27000000000";
+// Client's WhatsApp booking line (country code, no +, no spaces)
+export const WHATSAPP_NUMBER = "27658660232";
 
 // Shown on the site as the call line (formatted for humans)
-export const PHONE_DISPLAY = "+27 00 000 0000";
+export const PHONE_DISPLAY = "+27 65 866 0232";
 
 export const BUSINESS = {
   name: "PulsiveG",
