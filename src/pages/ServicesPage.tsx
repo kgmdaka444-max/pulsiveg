@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { PageHeader } from "../components/ui";
+import { PageHeader, Reveal } from "../components/ui";
 import { SERVICES } from "../data/services";
 import { formatZAR } from "../data/pricing";
 
@@ -17,25 +17,28 @@ export default function ServicesPage() {
       />
       <section className="max-w-7xl mx-auto px-5 sm:px-8 py-20">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {SERVICES.map((s) => (
-            <Link key={s.id} to={`/services/${s.id}`} className="group relative aspect-[4/5] overflow-hidden bg-ink-2">
-              <img
-                src={s.img}
-                alt={s.name}
-                className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition-all duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
-              <div className="absolute bottom-0 p-6">
-                <h2 className="font-display text-2xl">{s.name}</h2>
-                <p className="font-display italic text-cream/70 mt-1">{s.strap}</p>
-                <p className="text-mist text-xs mt-3">
-                  from <span className="text-gold">{formatZAR(s.fromPrice)}</span>
-                </p>
-                <p className="text-gold text-[11px] tracking-[0.25em] uppercase mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                  Details →
-                </p>
-              </div>
-            </Link>
+          {SERVICES.map((s, i) => (
+            <Reveal key={s.id} delay={(i % 3) * 70}>
+              <Link to={`/services/${s.id}`} className="group relative block aspect-[4/5] overflow-hidden rounded-3xl press">
+                <img
+                  src={s.img}
+                  alt={s.name}
+                  className="absolute inset-0 w-full h-full object-cover opacity-65 group-hover:opacity-90 group-hover:scale-[1.04] transition-all duration-700"
+                  style={{ transitionTimingFunction: "var(--ease-fluid)" }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/30 to-transparent" />
+                <div className="absolute bottom-0 p-6">
+                  <h2 className="font-display text-2xl">{s.name}</h2>
+                  <p className="text-cream/60 text-[15px] mt-1">{s.strap}</p>
+                  <p className="text-mist text-[13px] mt-3">
+                    from <span className="text-gold font-medium">{formatZAR(s.fromPrice)}</span>
+                  </p>
+                  <p className="link-gold text-[13px] mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Details →
+                  </p>
+                </div>
+              </Link>
+            </Reveal>
           ))}
         </div>
       </section>

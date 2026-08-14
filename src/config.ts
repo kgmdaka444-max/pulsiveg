@@ -9,6 +9,11 @@ export const WHATSAPP_NUMBER = "27658660232";
 // Shown on the site as the call line (formatted for humans)
 export const PHONE_DISPLAY = "+27 65 866 0232";
 
+// ⚡ OPTIONAL: client's payment link (Yoco / PayFast / SnapScan page).
+// When set, accepted quotes show a "Pay 50% deposit" button — clients can
+// transact without the operator lifting a finger. Leave "" to hide.
+export const DEPOSIT_LINK = "";
+
 export const BUSINESS = {
   name: "PulsiveG",
   tagline: "Luxury Chauffeur & VIP Transport",

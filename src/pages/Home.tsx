@@ -3,7 +3,7 @@ import Hero from "../components/Hero";
 import DriversPortal from "../components/DriversPortal";
 import LeadMagnet from "../components/LeadMagnet";
 import FaqAccordion from "../components/FaqAccordion";
-import { Kicker, StatsBar, TrustStrip, GoldButton, GhostButton } from "../components/ui";
+import { Reveal, SectionHead, StatsBar, TrustStrip, GoldButton, GhostButton } from "../components/ui";
 import { VEHICLES } from "../data/vehicles";
 import { SERVICES } from "../data/services";
 import { formatZAR } from "../data/pricing";
@@ -33,9 +33,9 @@ const PILLARS = [
 ];
 
 const STEPS = [
-  { n: "1", title: "Build your trip", body: "Service, vehicle, chauffeur, details — under 60 seconds in the booking flow." },
-  { n: "2", title: "One tap to WhatsApp", body: "Your structured request lands directly with the fleet desk. No forms lost to inboxes." },
-  { n: "3", title: "Human confirmation", body: "A real person confirms availability and your locked rate in minutes — not a ticket number." },
+  { n: "1", title: "Build your trip", body: "Service, vehicle, chauffeur, details — under 60 seconds in the quote flow." },
+  { n: "2", title: "Instant quote", body: "A line-item quote generated on the spot from published rates. No callbacks, no waiting." },
+  { n: "3", title: "Accept & secure", body: "One tap reserves it on WhatsApp and locks your price. Pay the deposit and it's done." },
   { n: "4", title: "We arrive", body: "Your chauffeur arrives early, greets you by name, and the journey runs exactly as agreed." },
 ];
 
@@ -46,180 +46,213 @@ export default function Home() {
       <TrustStrip />
 
       {/* WHY */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-24">
-        <Kicker>Why PulsiveG</Kicker>
-        <h2 className="font-display text-4xl sm:text-5xl mt-5 max-w-2xl">
-          Built for the <span className="text-gold">exceptionally demanding.</span>
-        </h2>
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-28">
+        <SectionHead
+          kicker="Why PulsiveG"
+          title={
+            <>
+              Built for the <span className="text-gold">exceptionally demanding.</span>
+            </>
+          }
+        />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-14">
-          {PILLARS.map((p) => (
-            <article key={p.title} className="border border-white/10 bg-ink-2 p-7">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-gold">{p.kicker}</p>
-              <h3 className="font-display text-2xl mt-3">{p.title}</h3>
-              <p className="text-mist text-sm mt-4 leading-relaxed">{p.body}</p>
-            </article>
+          {PILLARS.map((p, i) => (
+            <Reveal key={p.title} delay={i * 70} className="h-full">
+              <article className="card card-hover p-7 h-full">
+                <p className="text-[12px] font-semibold text-gold uppercase tracking-[0.1em]">{p.kicker}</p>
+                <h3 className="font-display text-2xl mt-3">{p.title}</h3>
+                <p className="text-mist text-[15px] mt-3 leading-relaxed">{p.body}</p>
+              </article>
+            </Reveal>
           ))}
         </div>
-        <div className="mt-10">
+        <Reveal className="mt-10">
           <StatsBar />
-        </div>
+        </Reveal>
       </section>
 
       {/* FLEET PREVIEW */}
-      <section className="bg-ink-2 border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-24">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <Kicker>The Fleet</Kicker>
-              <h2 className="font-display text-4xl sm:text-5xl mt-5">
+      <section className="band py-28">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <SectionHead
+            kicker="The Fleet"
+            title={
+              <>
                 Engineered for <span className="text-gold">every occasion.</span>
-              </h2>
-            </div>
-            <GhostButton to="/fleet">View full fleet</GhostButton>
-          </div>
+              </>
+            }
+          />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-14">
-            {VEHICLES.slice(0, 4).map((v) => (
-              <Link key={v.id} to={`/fleet/${v.id}`} className="group relative aspect-[3/4] overflow-hidden bg-ink">
-                <img
-                  src={v.img}
-                  alt={v.name}
-                  className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
-                <div className="absolute bottom-0 p-5">
-                  <h3 className="font-display text-xl">{v.name}</h3>
-                  <p className="text-mist text-sm mt-1">{v.tagline}</p>
-                  <p className="text-gold text-[11px] tracking-[0.25em] uppercase mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                    View specifications →
-                  </p>
-                </div>
-              </Link>
+            {VEHICLES.slice(0, 4).map((v, i) => (
+              <Reveal key={v.id} delay={i * 70}>
+                <Link to={`/fleet/${v.id}`} className="group relative block aspect-[3/4] overflow-hidden rounded-3xl press">
+                  <img
+                    src={v.img}
+                    alt={v.name}
+                    className="absolute inset-0 w-full h-full object-cover opacity-75 group-hover:opacity-100 group-hover:scale-[1.04] transition-all duration-700"
+                    style={{ transitionTimingFunction: "var(--ease-fluid)" }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
+                  <div className="absolute bottom-0 p-6">
+                    <h3 className="font-display text-xl">{v.name}</h3>
+                    <p className="text-mist text-[14px] mt-1">{v.tagline}</p>
+                    <p className="link-gold text-[13px] mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      View specifications →
+                    </p>
+                  </div>
+                </Link>
+              </Reveal>
             ))}
           </div>
+          <Reveal className="text-center mt-12">
+            <GhostButton to="/fleet">View the full fleet</GhostButton>
+          </Reveal>
         </div>
       </section>
 
       {/* SERVICES */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-24">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <Kicker>Services</Kicker>
-            <h2 className="font-display text-4xl sm:text-5xl mt-5">
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-28">
+        <SectionHead
+          kicker="Services"
+          title={
+            <>
               Every journey, <span className="text-gold">handled perfectly.</span>
-            </h2>
-          </div>
-          <GhostButton to="/services">All services</GhostButton>
-        </div>
+            </>
+          }
+        />
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-14">
-          {SERVICES.map((s) => (
-            <Link key={s.id} to={`/services/${s.id}`} className="group border border-white/10 bg-ink-2 p-7 hover:border-gold/40 transition-colors">
-              <h3 className="font-display text-2xl">{s.name}</h3>
-              <p className="font-display italic text-cream/70 mt-1">{s.strap}</p>
-              <p className="text-mist text-sm mt-4 leading-relaxed line-clamp-3">{s.description}</p>
-              <p className="flex items-baseline justify-between mt-6">
-                <span className="text-gold text-[11px] tracking-[0.25em] uppercase opacity-70 group-hover:opacity-100 transition-opacity">
-                  Details →
-                </span>
-                <span className="text-mist text-xs">from <span className="text-cream">{formatZAR(s.fromPrice)}</span></span>
-              </p>
-            </Link>
+          {SERVICES.map((s, i) => (
+            <Reveal key={s.id} delay={i * 60} className="h-full">
+              <Link to={`/services/${s.id}`} className="card card-hover group block p-7 h-full press">
+                <h3 className="font-display text-2xl">{s.name}</h3>
+                <p className="text-cream/60 text-[15px] mt-1">{s.strap}</p>
+                <p className="text-mist text-[15px] mt-4 leading-relaxed line-clamp-3">{s.description}</p>
+                <p className="flex items-baseline justify-between mt-6">
+                  <span className="link-gold text-[14px]">Details →</span>
+                  <span className="text-mist text-[13px]">
+                    from <span className="text-cream font-medium">{formatZAR(s.fromPrice)}</span>
+                  </span>
+                </p>
+              </Link>
+            </Reveal>
           ))}
         </div>
       </section>
 
       {/* CHAUFFEURS PREVIEW */}
-      <section className="bg-ink-2 border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-24">
-          <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
-            <div>
-              <Kicker>The Chauffeur Portal</Kicker>
-              <h2 className="font-display text-4xl sm:text-5xl mt-5 max-w-xl">
+      <section className="band py-28">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <SectionHead
+            kicker="The Chauffeur Portal"
+            title={
+              <>
                 Don&apos;t book a car. <span className="text-gold">Choose your chauffeur.</span>
-              </h2>
-            </div>
-            <GhostButton to="/chauffeurs">Meet all six</GhostButton>
+              </>
+            }
+          />
+          <div className="mt-14">
+            <DriversPortal limit={3} />
           </div>
-          <DriversPortal limit={3} />
+          <Reveal className="text-center mt-12">
+            <GhostButton to="/chauffeurs">Meet all six</GhostButton>
+          </Reveal>
         </div>
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-24">
-        <Kicker>How it works</Kicker>
-        <h2 className="font-display text-4xl sm:text-5xl mt-5 max-w-2xl">
-          Seamless, from first tap <span className="text-gold">to arrival.</span>
-        </h2>
+      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-28">
+        <SectionHead
+          kicker="How it works"
+          title={
+            <>
+              Seamless, from first tap <span className="text-gold">to arrival.</span>
+            </>
+          }
+        />
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-14">
-          {STEPS.map((s) => (
-            <div key={s.n} className="border border-white/10 p-7">
-              <p className="font-display text-5xl text-gold/40">{s.n}</p>
-              <h3 className="font-display text-xl mt-4">{s.title}</h3>
-              <p className="text-mist text-sm mt-3 leading-relaxed">{s.body}</p>
-            </div>
+          {STEPS.map((s, i) => (
+            <Reveal key={s.n} delay={i * 70} className="h-full">
+              <div className="card p-7 h-full">
+                <p className="font-display text-5xl text-gold/35">{s.n}</p>
+                <h3 className="text-[17px] font-semibold mt-4">{s.title}</h3>
+                <p className="text-mist text-[15px] mt-2.5 leading-relaxed">{s.body}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
-        <div className="mt-10">
-          <GoldButton to="/book">Start your booking →</GoldButton>
-        </div>
+        <Reveal className="text-center mt-12">
+          <GoldButton to="/book">Get your instant quote</GoldButton>
+        </Reveal>
       </section>
 
       {/* EXPERIENCE TRIO */}
-      <section className="bg-ink-2 border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-24">
-          <Kicker>The PulsiveG Experience</Kicker>
-          <h2 className="font-display text-4xl sm:text-5xl mt-5 max-w-2xl">
-            We don&apos;t simply drive you. <span className="text-gold">We elevate every journey.</span>
-          </h2>
+      <section className="band py-28">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <SectionHead
+            kicker="The PulsiveG Experience"
+            title={
+              <>
+                We don&apos;t simply drive you. <span className="text-gold">We elevate every journey.</span>
+              </>
+            }
+          />
           <div className="grid lg:grid-cols-3 gap-4 mt-14">
-            <article className="border border-gold/30 bg-ink p-8">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-gold">Elite Membership</p>
-              <p className="text-mist text-sm mt-4 leading-relaxed">
-                Priority bookings, preferential transfer rates, monthly billing and your
-                preferred chauffeur on standing request. Launching with our corporate desk.
-              </p>
-              <Link to="/corporate" className="inline-block text-gold text-[11px] tracking-[0.25em] uppercase mt-6 hover:text-gold-soft">
-                Explore Elite →
-              </Link>
-            </article>
-            <article className="border border-white/10 bg-ink p-8">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-gold">Referral Programme</p>
-              <p className="text-mist text-sm mt-4 leading-relaxed">
-                Introduce a friend or colleague to PulsiveG — you earn travel credit on their
-                first completed journey, and they arrive with a welcome discount.
-              </p>
-              <a
-                href={waLink("Hi PulsiveG, I'd like to refer someone to your service.")}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-block text-gold text-[11px] tracking-[0.25em] uppercase mt-6 hover:text-gold-soft"
-              >
-                Refer & earn →
-              </a>
-            </article>
-            <article className="border border-white/10 bg-ink p-8">
-              <p className="text-[10px] tracking-[0.3em] uppercase text-gold">Uncompromised Safety</p>
-              <p className="text-mist text-sm mt-4 leading-relaxed">
-                Vetted professional chauffeurs, multi-point vehicle inspections, comprehensive
-                commercial insurance and a 24/7 fleet desk behind every journey.
-              </p>
-              <Link to="/why-us" className="inline-block text-gold text-[11px] tracking-[0.25em] uppercase mt-6 hover:text-gold-soft">
-                Our standards →
-              </Link>
-            </article>
+            <Reveal className="h-full">
+              <article className="card card-hover p-8 h-full ring-1 ring-gold/40">
+                <p className="text-[12px] font-semibold text-gold uppercase tracking-[0.1em]">Elite Membership</p>
+                <p className="text-mist text-[15px] mt-4 leading-relaxed">
+                  Priority bookings, preferential transfer rates, monthly billing and your
+                  preferred chauffeur on standing request. Launching with our corporate desk.
+                </p>
+                <Link to="/corporate" className="link-gold inline-block mt-6 text-[14px]">
+                  Explore Elite →
+                </Link>
+              </article>
+            </Reveal>
+            <Reveal delay={70} className="h-full">
+              <article className="card card-hover p-8 h-full">
+                <p className="text-[12px] font-semibold text-gold uppercase tracking-[0.1em]">Referral Programme</p>
+                <p className="text-mist text-[15px] mt-4 leading-relaxed">
+                  Introduce a friend or colleague to PulsiveG — you earn travel credit on their
+                  first completed journey, and they arrive with a welcome discount.
+                </p>
+                <a
+                  href={waLink("Hi PulsiveG, I'd like to refer someone to your service.")}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="link-gold inline-block mt-6 text-[14px]"
+                >
+                  Refer & earn →
+                </a>
+              </article>
+            </Reveal>
+            <Reveal delay={140} className="h-full">
+              <article className="card card-hover p-8 h-full">
+                <p className="text-[12px] font-semibold text-gold uppercase tracking-[0.1em]">Uncompromised Safety</p>
+                <p className="text-mist text-[15px] mt-4 leading-relaxed">
+                  Vetted professional chauffeurs, multi-point vehicle inspections, comprehensive
+                  commercial insurance and a 24/7 fleet desk behind every journey.
+                </p>
+                <Link to="/why-us" className="link-gold inline-block mt-6 text-[14px]">
+                  Our standards →
+                </Link>
+              </article>
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* FAQ PREVIEW */}
-      <section className="max-w-4xl mx-auto px-5 sm:px-8 py-24">
-        <Kicker>FAQ</Kicker>
-        <h2 className="font-display text-4xl sm:text-5xl mt-5">Frequently asked questions</h2>
+      <section className="max-w-3xl mx-auto px-5 sm:px-8 py-28">
+        <SectionHead kicker="FAQ" title="Frequently asked questions" />
         <div className="mt-12">
           <FaqAccordion limit={4} />
         </div>
-        <Link to="/why-us#faq" className="inline-block text-gold text-[11px] tracking-[0.25em] uppercase mt-8 hover:text-gold-soft">
-          All questions →
-        </Link>
+        <Reveal className="text-center mt-10">
+          <Link to="/why-us#faq" className="link-gold text-[15px]">
+            All questions →
+          </Link>
+        </Reveal>
       </section>
 
       <LeadMagnet />

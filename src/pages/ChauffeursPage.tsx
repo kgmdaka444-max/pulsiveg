@@ -15,7 +15,7 @@ export default function ChauffeursPage() {
       />
       <section className="max-w-7xl mx-auto px-5 sm:px-8 py-20">
         <DriversPortal />
-        <p className="text-[12px] text-mist/70 mt-10">
+        <p className="text-[13px] text-mist/70 mt-10 text-center">
           Preferred chauffeurs are guaranteed for corporate retainer clients and honoured
           for all bookings subject to availability.
         </p>

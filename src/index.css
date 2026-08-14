@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #0a0a0a;
-  --color-ink-2: #111110;
-  --color-ink-3: #1a1917;
-  --color-gold: #e0a83e;
-  --color-gold-soft: #c99a45;
-  --color-cream: #f3ede2;
-  --color-mist: #a8a29a;
-  --font-display: "Playfair Display", Georgia, serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  /* Apple-dark elevation ladder with a champagne accent */
+  --color-ink: #0a0a0c;
+  --color-ink-2: #101013;
+  --color-ink-3: #1a1a1f;
+  --color-gold: #d9a96b;
+  --color-gold-soft: #e6bd85;
+  --color-cream: #f5f5f7;
+  --color-mist: #a1a1a8;
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
+  --ease-fluid: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html {
@@ -20,26 +22,153 @@ body {
   background: var(--color-ink);
   color: var(--color-cream);
   font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
+::selection {
+  background: color-mix(in srgb, var(--color-gold) 30%, transparent);
+}
+
+/* Display type — weight + tight optical tracking, not a second family */
 .font-display {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
 }
 
 .kicker {
-  @apply text-xs tracking-[0.3em] uppercase text-gold font-medium;
+  @apply text-gold text-[13px] font-semibold tracking-[0.12em] uppercase;
 }
 
-.gold-line {
-  @apply inline-block w-10 h-px bg-gold align-middle mr-3;
+/* ---------- materials ---------- */
+
+.card {
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.055);
+  transition:
+    background 0.3s ease,
+    transform 0.6s var(--ease-fluid),
+    box-shadow 0.6s var(--ease-fluid);
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+.card-hover:hover {
+  background: rgba(255, 255, 255, 0.085);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
 }
 
-.fade-up {
-  animation: fadeUp 0.7s ease both;
+.glass {
+  background: rgba(10, 10, 12, 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.band {
+  background: var(--color-ink-2);
+}
+
+/* ---------- controls ---------- */
+
+.press {
+  cursor: pointer;
+  transition: transform 0.1s ease-out;
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-full bg-gold text-ink font-semibold text-[15px] px-7 py-3;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease-out,
+    filter 0.3s ease;
+}
+.btn-primary:hover {
+  filter: brightness(1.08);
+}
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-full text-cream font-medium text-[15px] px-7 py-3;
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition:
+    transform 0.1s ease-out,
+    background 0.3s ease;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+.btn-secondary:active {
+  transform: scale(0.97);
+}
+
+.link-gold {
+  @apply text-gold text-[15px] font-medium;
+  transition: color 0.25s ease;
+}
+.link-gold:hover {
+  color: var(--color-gold-soft);
+}
+
+/* ---------- motion ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s var(--ease-fluid),
+    transform 0.8s var(--ease-fluid);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes stepIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.step-in {
+  animation: stepIn 0.45s var(--ease-fluid) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    transform: none;
+    transition: opacity 0.25s ease;
+  }
+  .step-in {
+    animation: none;
+  }
+  .card,
+  .card-hover:hover,
+  .press:active,
+  .btn-primary:active,
+  .btn-secondary:active {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: var(--color-ink);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }

@@ -19,30 +19,32 @@ export default function Nav() {
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
     fn();
-    window.addEventListener("scroll", fn);
+    window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
   useEffect(() => setOpen(false), [pathname]);
 
+  const solid = scrolled || open || pathname !== "/";
+
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
-        scrolled || open || pathname !== "/" ? "bg-ink/95 backdrop-blur border-b border-white/5" : "bg-transparent"
+      className={`fixed top-0 inset-x-0 z-50 transition-[background,border-color] duration-300 ${
+        solid ? "glass border-b border-white/[0.06]" : "bg-transparent border-b border-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
-        <Link to="/" className="tracking-[0.25em] text-sm font-semibold shrink-0">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 h-14 flex items-center justify-between gap-4">
+        <Link to="/" className="text-[15px] font-semibold tracking-[0.14em] shrink-0 press">
           <span className="text-gold">PULSIVE</span>G
         </Link>
-        <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+        <nav className="hidden lg:flex items-center gap-7">
           {LINKS.map((l) => (
             <NavLink
               key={l.to}
               to={l.to}
               className={({ isActive }) =>
-                `text-xs tracking-[0.18em] uppercase transition-colors ${
-                  isActive ? "text-gold" : "text-mist hover:text-cream"
+                `text-[13px] font-medium transition-colors duration-200 ${
+                  isActive ? "text-cream" : "text-cream/60 hover:text-cream"
                 }`
               }
             >
@@ -53,32 +55,29 @@ export default function Nav() {
             href={waLink(`Hi ${BUSINESS.name}, I'd like to make a booking.`)}
             target="_blank"
             rel="noreferrer"
-            className="text-xs tracking-[0.18em] uppercase text-mist hover:text-cream transition-colors"
+            className="text-[13px] font-medium text-cream/60 hover:text-cream transition-colors duration-200"
           >
             WhatsApp
           </a>
-          <Link
-            to="/book"
-            className="bg-gold text-ink text-xs tracking-[0.2em] uppercase font-semibold px-6 py-2.5 hover:bg-gold-soft transition-colors"
-          >
+          <Link to="/book" className="btn-primary !px-5 !py-1.5 !text-[13px]">
             Book Now
           </Link>
         </nav>
-        <button className="lg:hidden text-cream text-2xl leading-none" onClick={() => setOpen(!open)} aria-label="Menu">
+        <button className="lg:hidden text-cream text-2xl leading-none press" onClick={() => setOpen(!open)} aria-label="Menu">
           {open ? "×" : "≡"}
         </button>
       </div>
       {open && (
-        <div className="lg:hidden bg-ink-2 border-t border-white/5 px-6 py-5 flex flex-col gap-4">
+        <div className="lg:hidden glass border-t border-white/[0.06] px-6 py-5 flex flex-col gap-4">
           {LINKS.map((l) => (
-            <NavLink key={l.to} to={l.to} className="text-sm tracking-[0.2em] uppercase text-mist">
+            <NavLink key={l.to} to={l.to} className="text-[15px] font-medium text-cream/80">
               {l.label}
             </NavLink>
           ))}
-          <Link to="/book" className="bg-gold text-ink text-center text-xs tracking-[0.25em] uppercase font-semibold px-6 py-3.5">
+          <Link to="/book" className="btn-primary">
             Book Now
           </Link>
-          <a href={`tel:${PHONE_DISPLAY.replace(/\s/g, "")}`} className="text-sm tracking-[0.2em] uppercase text-gold">
+          <a href={`tel:${PHONE_DISPLAY.replace(/\s/g, "")}`} className="text-[15px] font-medium text-gold">
             {PHONE_DISPLAY}
           </a>
         </div>

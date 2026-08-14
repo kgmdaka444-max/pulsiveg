@@ -1,4 +1,4 @@
-import { PageHeader, Kicker, StatsBar, GoldButton } from "../components/ui";
+import { PageHeader, Reveal, SectionHead, StatsBar, GoldButton } from "../components/ui";
 import FaqAccordion from "../components/FaqAccordion";
 
 const STANDARDS = [
@@ -33,26 +33,29 @@ export default function WhyUsPage() {
         sub="Luxury clients book on trust. These are the standards that earn it — published, not promised."
       />
       <section className="max-w-7xl mx-auto px-5 sm:px-8 py-20">
-        <StatsBar />
-        <div className="grid sm:grid-cols-2 gap-4 mt-14">
-          {STANDARDS.map((s) => (
-            <article key={s.title} className="border border-white/10 bg-ink-2 p-8">
-              <h2 className="font-display text-2xl">{s.title}</h2>
-              <p className="text-mist text-sm mt-4 leading-relaxed">{s.body}</p>
-            </article>
+        <Reveal>
+          <StatsBar />
+        </Reveal>
+        <div className="grid sm:grid-cols-2 gap-4 mt-12">
+          {STANDARDS.map((s, i) => (
+            <Reveal key={s.title} delay={(i % 2) * 70} className="h-full">
+              <article className="card card-hover p-8 h-full">
+                <h2 className="font-display text-2xl">{s.title}</h2>
+                <p className="text-mist text-[15px] mt-4 leading-relaxed">{s.body}</p>
+              </article>
+            </Reveal>
           ))}
         </div>
       </section>
 
-      <section id="faq" className="max-w-4xl mx-auto px-5 sm:px-8 pb-24">
-        <Kicker>FAQ</Kicker>
-        <h2 className="font-display text-4xl sm:text-5xl mt-5">Frequently asked questions</h2>
+      <section id="faq" className="max-w-3xl mx-auto px-5 sm:px-8 pb-28">
+        <SectionHead kicker="FAQ" title="Frequently asked questions" />
         <div className="mt-12">
           <FaqAccordion />
         </div>
-        <div className="mt-12">
-          <GoldButton to="/book">Book your chauffeur →</GoldButton>
-        </div>
+        <Reveal className="text-center mt-12">
+          <GoldButton to="/book">Book your chauffeur</GoldButton>
+        </Reveal>
       </section>
     </>
   );
